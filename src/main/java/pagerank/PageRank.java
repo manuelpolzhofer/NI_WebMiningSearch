@@ -1,5 +1,6 @@
 package pagerank;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import crawler.Website;
@@ -8,22 +9,25 @@ public class PageRank {
     public ArrayList<Website> websiteList;
     private static final double terminationDelta = 0.001;
     private double teleportationPropability = 0.1;
+    
+    PrintWriter out;
 
-    public PageRank(ArrayList<Website> websiteList) {
+    public PageRank(ArrayList<Website> websiteList, PrintWriter out) {
         this.websiteList = websiteList;
+        this.out = out;
     }
     public void calculatePagranks() {
-        System.out.println("Start PageRank Calculation");
+        out.write("<br>Start PageRank Calculation");
         this.setInitialPagerank();
         int iterationCounter = 1;
         while(!this.hasTerminatingAccuracy())
         {
             this.printPageRankSum();
             this.iteratePagerank();
-            System.out.println("PageRank iteration " + iterationCounter);
+            out.write("<br>PageRank iteration " + iterationCounter);
             iterationCounter++;
         }
-        System.out.println("PageRank successfull calculated");
+        out.write("<br>PageRank successfull calculated");
         this.printPageRankResults();
     }
 
@@ -31,7 +35,7 @@ public class PageRank {
           for ( Website website : this.websiteList )
           {
      
-              System.out.println("#Site:" + website.getUrl() + " #PageRank: " + website.pageRankNew);
+              out.write("<br>#Site:" + website.getUrl() + " #PageRank: " + website.pageRankNew);
           }   
 
     }
@@ -87,7 +91,7 @@ public class PageRank {
               linkedPagerankValue += otherwebsite.pageRankOld / (double)otherwebsite.numberOfOutgoingLinks();
           }
       }
-      //System.out.println("linkedPagerankValue: " + linkedPagerankValue);
+      //out.write("<br>linkedPagerankValue: " + linkedPagerankValue);
       return linkedPagerankValue;
     }    
 
@@ -100,7 +104,7 @@ public class PageRank {
                   nonLinkedPagerankValue += otherwebsite.pageRankOld / this.getAmountwebsite();
               }
           }
-          //System.out.println("nonLinkedPagerankValue: " + nonLinkedPagerankValue);
+          //out.write("<br>nonLinkedPagerankValue: " + nonLinkedPagerankValue);
         return nonLinkedPagerankValue;
     }
     private int getAmountwebsite() {
@@ -112,6 +116,6 @@ public class PageRank {
           {
               sumPagerank += otherwebsite.pageRankNew;
           }
-        System.out.println("Summe Pagerank:" + sumPagerank);
+        out.write("<br>Summe Pagerank:" + sumPagerank);
     }
 }

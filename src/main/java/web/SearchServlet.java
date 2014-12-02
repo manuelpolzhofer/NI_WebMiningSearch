@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pagerank.PageRank;
+import search.SearchManager;
 import textminer.Document;
 import textminer.Preprocesser;
 import crawler.NICrawler;
@@ -45,26 +46,21 @@ public class SearchServlet extends HttpServlet {
 		String searchType = request.getParameter("ranking"); 
 		
 	
+		out.write("<html><head><title>Search Result</title></head><body>");
 		
-		
+		out.write("<link rel=\"stylesheet\" type=\"text/css\" href=\""+request.getContextPath()+"result.css\">");
 		out.write("<h3>Crawler</h3>"+"<div id=\"crawler-output\">");
 
 		out.write("</div><br>");
 
-		out.write(query);
-		out.write(startpage);
-		out.write(maxResults);
-		out.write(searchType);
+		out.write(query + "<br>");
+		out.write(startpage+ "<br>");
+		out.write(maxResults +  "<br>");
+		out.write(searchType +  "<br>");
 		
-		out.write("<div id=\"search-for\">Search for: <b>fuu </b>");
+		out.write("<div id=\"search-for\">Search for: <b>"+query+" </b>");
 	
-
-		
-		
-	 
-		out.write("search results");
-	
-	 
+	 //start crawling -----------
 		out.write("NI WebCrawler");
     	NICrawler niCrawler = new NICrawler();
     	String startUrl = "http://en.wikipedia.org/wiki/Data_mining";
@@ -80,8 +76,28 @@ public class SearchServlet extends HttpServlet {
     	ArrayList<Website> websites =
     		    new ArrayList<Website>(visitedWebsites.values());
     	
-    	PageRank pageRanke = new PageRank(websites);
-    	pageRanke.calculatePagranks();
+    //end crawling -----------------
+    	
+    	SearchManager searchManager = new SearchManager();
+    	if(searchType.equals("page_rank"))
+    	{
+    		searchManager.performPageRankSearch(query, websites, out);
+    	}
+      	if(searchType.equals("boolean"))
+    	{
+    		searchManager.performBooleanSearch(query, websites, out);
+    	}
+     	if(searchType.equals("vsr"))
+    	{
+    		searchManager.performVSRSearch(query, websites, out);
+    	}
+     	if(searchType.equals("vsr_html"))
+    	{
+    		searchManager.performVSRHTMLSearch(query, websites, out);
+    	}
+    	
+    	
+  
     	
     	
 		/*ArrayList<Document> docList;
