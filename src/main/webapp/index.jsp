@@ -20,29 +20,24 @@ Hint: only enter high "stop after" numbers if you have some time ;)
 
  <form name="search" action="SearchServlet" method="post">
         <p>
-            Search in: <input name="startpage" value = "http://en.wikipedia.org/wiki/Lolcat" size="44"/> 
+            Crawler Start: <input name="startpage" value = "http://en.wikipedia.org/wiki/Data_mining" size="44"/> 
         </p>
         
         <p> Stop after: <input name="maxresults" size="4" value="10"/> </p> 
         
         <p>
-            Search for: <input name="query" value ="cat" size="44"/> 
+            Search for: <input name="query" value ="data" size="44"/> 
         </p>
             
-        <p> Search for: </p>
-        <p> <input type="radio" name="type" value="html" checked="checked" />HTML<br> </p>
-            
-        <p> <input type="radio" name="type" value="img"/>Images<br> </p>
-        
-         <p>Search with Ranking<p>
-        
-                <p> <input type="radio" name="ranking" value="true" checked="checked" />Ranking<br> </p>
-            
-        <p> <input type="radio" name="ranking" value="false"/>No Ranking<br> </p>
-           
+
+       
+                <p> <input type="radio" name="ranking" value="boolean" checked="checked" />Boolean Retrieval<br> </p>
+          
+        <p> <input type="radio" name="ranking" value="vsr"/>Vector Space retrieval<br> </p>
+         <p> <input type="radio" name="ranking" value="vsr_html"/>Vector Space retrieval + HTML Markup<br> </p>
+         <p> <input type="radio" name="ranking" value="page_rank"/>Page Rank Algorithm<br> </p>     
        	<p> <input type="submit" value="Search"/> </p>
-       	
-      
+
        
         
  </form>

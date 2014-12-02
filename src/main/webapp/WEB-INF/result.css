@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+#crawler-output
+{
+background-color: lightgray;
+font-family: Courier New;
+font-size: 0.85em;
+	
+}
+
+.search-url
+{
+	color: #006621;
+	font-style: normal;
+	
+}
+.search-title
+{
+	color: #1a0dab;
+	font-style: normal;
+	
+}

@@ -37,8 +37,29 @@ public class SearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-	 
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		String query = request.getParameter("query");
+		String startpage = request.getParameter("startpage"); 
+		String maxResults = request.getParameter("maxresults");
+		String searchType = request.getParameter("ranking"); 
+		
+	
+		
+		
+		out.write("<h3>Crawler</h3>"+"<div id=\"crawler-output\">");
+
+		out.write("</div><br>");
+
+		out.write(query);
+		out.write(startpage);
+		out.write(maxResults);
+		out.write(searchType);
+		
+		out.write("<div id=\"search-for\">Search for: <b>fuu </b>");
+	
+
+		
 	 
 		out.write("search results");
 	
