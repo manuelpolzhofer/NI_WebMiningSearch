@@ -15,7 +15,7 @@ public class Website implements Serializable {
 	ArrayList<String> links;
 	String text;
 	String title;
-	String fileName;
+	private String fileName;
 	
 	
 	private Document document;
@@ -27,6 +27,11 @@ public class Website implements Serializable {
     public void setFileName(String fileName)
     {
     	this.fileName = fileName;
+    }
+    public String getFileName()
+    {
+    	return fileName;
+    	
     }
     
     public int numberOfOutgoingLinks() {

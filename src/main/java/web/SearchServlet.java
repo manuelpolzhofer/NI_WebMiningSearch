@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -103,9 +104,11 @@ public class SearchServlet extends HttpServlet {
 		ArrayList<Document> docList;
 		
 		
-		String stopwords = request.getContextPath()+ "/stopwords.txt";
+		String stopwords = "WEB-INF/stopwords.txt";
 		
-		
+		ServletContext context = getServletConfig().getServletContext();
+		String fullPath = context.getRealPath(stopwords);
+		stopwords = fullPath;
 		
 		File folderFile = new File("korpus");
 		File[] fileList = folderFile.listFiles();
