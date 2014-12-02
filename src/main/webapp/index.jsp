@@ -26,6 +26,7 @@ Hint: only enter high "stop after" numbers if you have some time ;)
         <p> Stop after: <input name="maxresults" size="4" value="10"/> </p> 
         
         <p>
+        
             Search for: <input name="query" value ="data" size="44"/> 
         </p>
             
