@@ -113,7 +113,7 @@ public class Document {
 		System.out.println("Vector 2:");
 		System.out.println(documentList.get(1).documentVector);
 		*/
-		System.out.println("Cos distance between d1 and d2: " + documentList.get(0).computeCosDistance(documentList.get(1)));
+	//	System.out.println("Cos distance between d1 and d2: " + documentList.get(0).computeCosDistance(documentList.get(1)));
 		
 		return documentList;
 		

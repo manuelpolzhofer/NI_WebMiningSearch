@@ -51,11 +51,18 @@ public class Website implements Serializable, Comparable<Website> {
     		if(this.pageRankNew - website.pageRankNew == 0)
     			return 0;
     	}
-    	
-    	if (sortVSR){
-    		return (int) ((int) this.cosDisToQuery - website.cosDisToQuery);
+    	if(sortVSR)
+    	{
+    		if(this.cosDisToQuery - website.cosDisToQuery < 0 )
+    			return -1;
+    		if(this.cosDisToQuery - website.cosDisToQuery > 0)
+    			return 1;
+    		if(this.cosDisToQuery - website.cosDisToQuery == 0)
+    			return 0;
     	}
-    	return (int) ((int) this.pageRankNew - website.pageRankNew);
+    	
+  
+    	return 0;
     	
  
     }

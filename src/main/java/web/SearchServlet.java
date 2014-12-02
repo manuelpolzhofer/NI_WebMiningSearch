@@ -70,10 +70,14 @@ public class SearchServlet extends HttpServlet {
     	niCrawler.startCrawling(startUrl,maxNumberOfVisit,out);
     	
     	HashMap<String,Website> visitedWebsites = niCrawler.getVisitedWebsites();
- 
+       	visitedWebsites.put("SEARCH_QUERY", new Website("SEARCH_QUERY",query,query,new ArrayList<String>()));
+    	
+    	
+    	
     	WebsiteWriter websiteWriter = new WebsiteWriter("korpus");
     	websiteWriter.writeWebsites(visitedWebsites);
     	
+ 
     	ArrayList<Website> websites =
     		    new ArrayList<Website>(visitedWebsites.values());
     	

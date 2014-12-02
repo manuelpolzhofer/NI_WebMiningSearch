@@ -45,7 +45,8 @@ public class SearchManager {
 		for(int i = 0;i<results.size();i++)
 		{
 			Website w = results.get(i);
-			
+			if(w.getUrl().equals("SEARCH_QUERY") == false)
+			{
 			out.write("<tr>");
 			out.write("<td>"+(i+1)+"</td>");
 		    out.write("<td style=\"white-space:nowrap;\">"+w.getTitle()+"</td>");
@@ -53,6 +54,7 @@ public class SearchManager {
 			out.write("<td>"+w.pageRankNew+"</td>");
 			out.write("<td>"+w.cosDisToQuery+"</td>");
 			out.write("</tr>");
+			}
 		}
 		out.write("</table>");
 	}
@@ -81,7 +83,17 @@ public class SearchManager {
 	
 		List<Website> results = new ArrayList<Website>();
 		
-		out.write("<h1>jlljkljklj</h1>");
+		out.write("<h1>Vector Space Retreival</h1>");
+		
+		
+				
+				for (int i= 0; i<websites.size(); i++){
+					if(websites.get(i).getUrl().equals("SEARCH_QUERY"))
+					{
+						documentQuery = websites.get(i).getDocument();
+					}
+					 
+				}
 		
 		for (int i= 0; i<websites.size(); i++){
 			
@@ -90,26 +102,20 @@ public class SearchManager {
 			results.add(websites.get(i));
 		}
 		
-System.out.println(results.toString());		
+		
 		//sort according to VSR
-		 Collections.sort(results);
+		 Collections.sort(results,Collections.reverseOrder());
 		 
 		 this.printResults(results, out);
 				
 	}
 	
-	public void printResultsVSR(List<Website> results, PrintWriter out)
-	{
-		for(int i = 0;i<results.size();i++)
-		{
-			out.write("<h2>"+results.get(i).getUrl()+ " "+results.get(i).cosDisToQuery+"<h2>");
-		}
-	}
+
 
 	public void performVSRHTMLSearch(String query, ArrayList<Website> websites,
 			PrintWriter out, Document documentQuery) {
 	
-		out.write("<h1>TODO:VSR HTML</h1>");
+		this.performVSRSearch(query, websites, out, documentQuery);
 		
 	}
 	
