@@ -2,6 +2,8 @@ package search;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import pagerank.PageRank;
 import textminer.Document;
@@ -16,8 +18,31 @@ public class SearchManager {
 	  	PageRank pageRanke = new PageRank(websites, out);
     	pageRanke.calculatePagranks();
     	
+    	List<Website> results = new ArrayList<Website>();
+		for(int i = 0;i<websites.size();i++)
+		{
+			if(websites.get(i).containsWordFromDocument(documentQuery))
+			{
+				websites.get(i).setSortPageRank(true);
+				results.add(websites.get(i));
+			}
+		}
+		
+		//sort according page ranks
+		 Collections.sort(results);
+		 
+		 this.printResults(results, out);
+		
+    	
    
 		
+	}
+	public void printResults(List<Website> results, PrintWriter out)
+	{
+		for(int i = 0;i<results.size();i++)
+		{
+			out.write("<h2>"+results.get(i).getUrl()+ " "+results.get(i).pageRankNew+"<h2>");
+		}
 	}
 
 	public void performBooleanSearch(String query, ArrayList<Website> websites,

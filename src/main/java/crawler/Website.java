@@ -6,7 +6,7 @@ import java.util.Map;
 
 import textminer.Document;
 
-public class Website implements Serializable {
+public class Website implements Serializable, Comparable<Website> {
 	
 	/**
 	 * 
@@ -24,6 +24,26 @@ public class Website implements Serializable {
 	
     public double pageRankOld = 0;
     public double pageRankNew = 0;
+    public double cosDisToQuery = 0;
+    private boolean sortPageRank;
+ 
+    public void setSortPageRank(boolean value)
+    {
+    	this.sortPageRank = value;
+    }
+    
+    
+    public int compareTo(Website website) {
+    	
+    	if(sortPageRank)
+    	{
+    		return (int) ((int) this.pageRankNew - website.pageRankNew);
+    	}
+    	return (int) ((int) this.pageRankNew - website.pageRankNew);
+    	
+ 
+    }
+    
     
     public void setFileName(String fileName)
     {
