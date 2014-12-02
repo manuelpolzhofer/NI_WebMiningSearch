@@ -53,21 +53,20 @@ public class SearchServlet extends HttpServlet {
 		out.write("<link rel=\"stylesheet\" type=\"text/css\" href=\""+request.getContextPath()+"result.css\">");
 		out.write("<h3>Crawler</h3>"+"<div id=\"crawler-output\">");
 
-		out.write("</div><br>");
-
-		out.write(query + "<br>");
-		out.write(startpage+ "<br>");
-		out.write(maxResults +  "<br>");
-		out.write(searchType +  "<br>");
-		
-		out.write("<div id=\"search-for\">Search for: <b>"+query+" </b>");
-	
 	 //start crawling -----------
-		out.write("NI WebCrawler");
     	NICrawler niCrawler = new NICrawler();
-    	String startUrl = "http://en.wikipedia.org/wiki/Data_mining";
-    	//String startUrl = "http://derstandard.at";
+    	String startUrl = startpage;	
     	int maxNumberOfVisit = 10;
+    	try
+    	{
+    	 maxNumberOfVisit = Integer.parseInt(maxResults);
+    	}
+    	catch(Exception e)
+    	{
+    	
+    		 maxNumberOfVisit = 10;
+    		
+    	}
     	niCrawler.startCrawling(startUrl,maxNumberOfVisit,out);
     	
     	HashMap<String,Website> visitedWebsites = niCrawler.getVisitedWebsites();
@@ -118,6 +117,7 @@ public class SearchServlet extends HttpServlet {
 		searchManager.addDocumentsToWebsites(docList,websites);
 		
     	
+		out.write("<div id=\"search-for\"<br>Search for: <b>"+query+" </b>");
 		
 		//stemm query
 

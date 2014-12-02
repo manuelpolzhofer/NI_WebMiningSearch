@@ -46,7 +46,7 @@ public class NICrawler {
 	
 	
 	public void startCrawling(String startUrl,int maxNumberOfWebsites, PrintWriter out){
-		out.write("fuu");
+	
 		visitedWebsites = new HashMap<String,Website>();
 		todoListForCrawler = new ArrayList<String>();
 		Website website = null;
@@ -64,7 +64,7 @@ public class NICrawler {
 			
 			if(website != null)
 			{
-			out.write("visited: "+website.getUrl());
+			out.write("<br>visited: "+website.getUrl());
 			//System.out.println(""+website.text);
 		
 			
@@ -75,7 +75,7 @@ public class NICrawler {
 		
 			
 		}
-		out.write("<br>Crawler Stopped - Visited Websites " +websiteCounter + " found Links which are not visted " + todoListForCrawler.size());
+		out.write("<br><br>Crawler Stopped - Visited Websites " +websiteCounter + " found Links which are not visted " + todoListForCrawler.size());
 		
 		
 		

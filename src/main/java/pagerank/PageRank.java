@@ -17,17 +17,17 @@ public class PageRank {
         this.out = out;
     }
     public void calculatePagranks() {
-        out.write("<br>Start PageRank Calculation");
+        //out.write("<br>Start PageRank Calculation");
         this.setInitialPagerank();
         int iterationCounter = 1;
         while(!this.hasTerminatingAccuracy())
         {
             this.printPageRankSum();
             this.iteratePagerank();
-            out.write("<br>PageRank iteration " + iterationCounter);
+            //out.write("<br>PageRank iteration " + iterationCounter);
             iterationCounter++;
         }
-        out.write("<br>PageRank successfull calculated");
+        //out.write("<br>PageRank successfull calculated");
         this.printPageRankResults();
     }
 
@@ -35,7 +35,7 @@ public class PageRank {
           for ( Website website : this.websiteList )
           {
      
-              out.write("<br>#Site:" + website.getUrl() + " #PageRank: " + website.pageRankNew);
+              //out.write("<br>#Site:" + website.getUrl() + " #PageRank: " + website.pageRankNew);
           }   
 
     }
@@ -91,7 +91,7 @@ public class PageRank {
               linkedPagerankValue += otherwebsite.pageRankOld / (double)otherwebsite.numberOfOutgoingLinks();
           }
       }
-      //out.write("<br>linkedPagerankValue: " + linkedPagerankValue);
+      ////out.write("<br>linkedPagerankValue: " + linkedPagerankValue);
       return linkedPagerankValue;
     }    
 
@@ -104,7 +104,7 @@ public class PageRank {
                   nonLinkedPagerankValue += otherwebsite.pageRankOld / this.getAmountwebsite();
               }
           }
-          //out.write("<br>nonLinkedPagerankValue: " + nonLinkedPagerankValue);
+          ////out.write("<br>nonLinkedPagerankValue: " + nonLinkedPagerankValue);
         return nonLinkedPagerankValue;
     }
     private int getAmountwebsite() {
@@ -116,6 +116,6 @@ public class PageRank {
           {
               sumPagerank += otherwebsite.pageRankNew;
           }
-        out.write("<br>Summe Pagerank:" + sumPagerank);
+        //out.write("<br>Summe Pagerank:" + sumPagerank);
     }
 }

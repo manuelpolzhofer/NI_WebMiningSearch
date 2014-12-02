@@ -14,7 +14,7 @@ public class SearchManager {
 	
 	public void performPageRankSearch(String query,ArrayList<Website> websites, PrintWriter out, Document documentQuery)
 	{
-		out.write("<h1>PageRank</h1>");
+		out.write("<h1>PageRank Results</h1>");
 	  	PageRank pageRanke = new PageRank(websites, out);
     	pageRanke.calculatePagranks();
     	
@@ -29,8 +29,8 @@ public class SearchManager {
 		}
 		
 		//sort according page ranks
-		 Collections.sort(results);
-		 
+		 Collections.sort(results,Collections.reverseOrder());
+	
 		 this.printResults(results, out);
 		
     	
@@ -60,7 +60,7 @@ public class SearchManager {
 	public void performBooleanSearch(String query, ArrayList<Website> websites,
 			PrintWriter out, Document documentQuery) {
 
-		out.write("<h1>Boolean</h1>");
+		out.write("<h1>Boolean Search Results</h1>");
     	List<Website> results = new ArrayList<Website>();
 		for(int i = 0;i<websites.size();i++)
 		{
