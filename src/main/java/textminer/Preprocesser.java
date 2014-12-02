@@ -46,7 +46,7 @@ public class Preprocesser {
 		ArrayList<String> stemmedQuery;
 		
 		Map<String,Integer>queryWordVector = new TreeMap<String,Integer>();
-		Document docQuery = new Document(null,null);
+		Document docQuery = new Document(null,null,null);
 				
 		String[] words = queryText.split(",|\\.|\\s+"); //store all the words in an array
 		

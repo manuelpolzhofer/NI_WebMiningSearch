@@ -2,6 +2,7 @@ package crawler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 import textminer.Document;
 
@@ -108,6 +109,31 @@ public class Website implements Serializable {
 
 	public void setDocument(Document document) {
 		this.document = document;
+	}
+	
+	public boolean containsWord(String word)
+	{
+	
+			Map<String,Integer> docMap =  this.document.getWordsInDocument();
+			return docMap.containsKey(word);			
+			
+	}
+	
+	public boolean containsWordFromDocument(Document query)
+	{
+		Map<String,Integer> queryMap = query.getWordsInDocument();
+		ArrayList<String> queryList = new ArrayList<String>(queryMap.keySet());
+		for(int i = 0 ;i< queryList.size();i++)
+		{
+			if(this.containsWord(queryList.get(i)))
+			{
+				return true;
+			}
+			
+		}
+		return false;
+
+		
 	}
 
 }

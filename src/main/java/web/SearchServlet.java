@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pagerank.PageRank;
+import search.Query;
 import search.SearchManager;
 import textminer.Document;
 import textminer.Preprocesser;
@@ -66,7 +67,7 @@ public class SearchServlet extends HttpServlet {
     	NICrawler niCrawler = new NICrawler();
     	String startUrl = "http://en.wikipedia.org/wiki/Data_mining";
     	//String startUrl = "http://derstandard.at";
-    	int maxNumberOfVisit = 5;
+    	int maxNumberOfVisit = 10;
     	niCrawler.startCrawling(startUrl,maxNumberOfVisit,out);
     	
     	HashMap<String,Website> visitedWebsites = niCrawler.getVisitedWebsites();
@@ -78,31 +79,13 @@ public class SearchServlet extends HttpServlet {
     		    new ArrayList<Website>(visitedWebsites.values());
     	
     //end crawling -----------------
-    	
-    	SearchManager searchManager = new SearchManager();
-    	if(searchType.equals("page_rank"))
-    	{
-    		searchManager.performPageRankSearch(query, websites, out);
-    	}
-      	if(searchType.equals("boolean"))
-    	{
-    		searchManager.performBooleanSearch(query, websites, out);
-    	}
-     	if(searchType.equals("vsr"))
-    	{
-    		searchManager.performVSRSearch(query, websites, out);
-    	}
-     	if(searchType.equals("vsr_html"))
-    	{
-    		searchManager.performVSRHTMLSearch(query, websites, out);
-    	}
+
     	
     	
-  
     	
     	
+    		
 		ArrayList<Document> docList;
-		
 		
 		String stopwords = "WEB-INF/stopwords.txt";
 		
@@ -129,8 +112,52 @@ public class SearchServlet extends HttpServlet {
 		//String query = new String("")
 		
 		//Generate TF-IDF vector representation
-		Document d = new Document(null,null);		
+		Document d = new Document(null,null,null);		
 		docList = d.processAllDocuments(dir);
+		SearchManager searchManager = new SearchManager();	
+		searchManager.addDocumentsToWebsites(docList,websites);
+		
+    	
+		
+		//stemm query
+
+		Query searchQuery  = new Query(2,query);
+		Document documentQuery = null;
+		try {
+			documentQuery = Preprocesser.processQuery(searchQuery, stopwords);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+    	if(searchType.equals("page_rank"))
+    	{
+    		searchManager.performPageRankSearch(query, websites, out, documentQuery);
+    	}
+      	if(searchType.equals("boolean"))
+    	{
+      		try {
+      			searchQuery.setType(1);
+    			documentQuery = Preprocesser.processQuery(searchQuery, stopwords);
+    		} catch (Throwable e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		// documentQuery = Preprocesser.processQuery(new Query(1,query), stopwords);
+    		searchManager.performBooleanSearch(query, websites, out, documentQuery);
+    	}
+     	if(searchType.equals("vsr"))
+    	{
+    		// documentQuery = Preprocesser.processQuery(new Query(2,query), stopwords);
+    		searchManager.performVSRSearch(query, websites, out,documentQuery);
+    	}
+     	if(searchType.equals("vsr_html"))
+    	{
+    		// documentQuery = Preprocesser.processQuery(new Query(2,query), stopwords);
+    		searchManager.performVSRHTMLSearch(query, websites, out,documentQuery);
+    	}
+		
+		
 		
 	 
 	 
