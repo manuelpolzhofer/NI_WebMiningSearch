@@ -16,14 +16,139 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
+import search.Query;
 import stemmer.*;
 
 public class Preprocesser {
 
 	public static final String language = "english";
 	
+	public static final int BOOLEAN = 1;
+	public static final int VSR = 2;
 	
+	/**
+	 * Process query according to its type
+	 * @param q
+	 * @return
+	 * @throws Throwable 
+	 */
+	public static Document processQuery(Query q, String stopWordsFile) throws Throwable{
+		
+		
+		String queryText = q.getQueryText();
+		Map<String,Integer> wordsInDocument;
+		ArrayList<String> wordsInQuery = new ArrayList<String>();
+		ArrayList<String> validWordsInQuery = new ArrayList<String>();
+		ArrayList<String> stopWordsList = getStopWordsList(stopWordsFile);
+		ArrayList<String> stemmedQuery;
+		
+		Map<String,Integer>queryWordVector = new TreeMap<String,Integer>();
+		Document docQuery = new Document(null,null);
+				
+		String[] words = queryText.split(",|\\.|\\s+"); //store all the words in an array
+		
+		//Store non empty words in the array list of the file
+		for (int j=0; j< words.length;j++){
+		
+			if (words[j].isEmpty()){
+				continue;
+			}
+				
+			//Delete numbers
+			try {
+				Integer aux = Integer.parseInt(words[j]);
+				
+			} catch (NumberFormatException e) {
+				
+				wordsInQuery.add(words[j].toLowerCase()); //Only add if its not a number
+			}
+											
+		}
+		
+		// If query is boolean, store AND, OR, NOT
+		if (q.getType() == BOOLEAN){
+			if (wordsInQuery.contains("and")){
+				validWordsInQuery.add("and");
+			}
+		
+			if (wordsInQuery.contains("or")){
+				validWordsInQuery.add("or");
+			}
+		
+			if (wordsInQuery.contains("not")){
+				validWordsInQuery.add("not");
+			}
+		}
+	
+		//Remove stopwords
+		for (String stopWord: stopWordsList){
+			
+			if (wordsInQuery.contains(stopWord)){
+				wordsInQuery.remove(stopWord);
+			}
+
+		}
+		
+		//Update valid words list
+		for (String w:wordsInQuery){
+			validWordsInQuery.add(w);			
+		}
+				
+		// Apply stemmer
+		stemmedQuery = stemQuery(validWordsInQuery);
+		
+		//Make document from stemmed query
+		for (String w : stemmedQuery){
+			
+			queryWordVector.put(w, 1);
+		}
+		
+		docQuery.setWordsInDocument(queryWordVector);
+		
+		
+System.out.println(docQuery.getWordsInDocument());
+
+		return docQuery;
+	}
+	
+	
+	
+	/**
+	 * Stems the words of a given query
+	 * @param queryWords
+	 * @return
+	 * @throws Throwable
+	 */
+	private static ArrayList<String> stemQuery(ArrayList<String> queryWords) throws Throwable{
+	
+		// Create output list
+		ArrayList<String> stemmedQuery = new ArrayList<String>();
+		
+		Class stemClass = Class.forName("stemmer.ext." + language + "Stemmer");
+		
+		SnowballStemmer stemmer = (SnowballStemmer) stemClass.newInstance();
+					
+		int repeat = 1;
+			
+		
+		for (String w : queryWords){
+		
+			String wordToStem = w.toLowerCase();
+			stemmer.setCurrent(wordToStem);
+			for (int j = repeat; j != 0; j--) {
+				stemmer.stem();
+			}
+			
+			stemmedQuery.add(stemmer.getCurrent());
+		}
+		
+		
+		return stemmedQuery;
+		
+	}
 	/**
 	 * Given a file list, passes the stemmer to all the files
 	 * using the language given. 

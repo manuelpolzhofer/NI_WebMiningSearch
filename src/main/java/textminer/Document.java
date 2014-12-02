@@ -296,14 +296,12 @@ public class Document {
 	
 	
 	
-	
-	
 	// Getters and Setters
 	public Map<String,Integer> getWordsInDocument() {
 		return wordsInDocument;
 	}
 
-	public void setWordsInDocument(HashMap<String,Integer> wordsInDocument) {
+	public void setWordsInDocument(Map<String,Integer> wordsInDocument) {
 		this.wordsInDocument = wordsInDocument;
 	}
 
