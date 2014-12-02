@@ -75,7 +75,7 @@ public class NICrawler {
 		
 			
 		}
-		System.out.println("Crawler Stopped - Visited Websites " +websiteCounter + " found Links which are not visted " + todoListForCrawler.size());
+		out.write("<br>Crawler Stopped - Visited Websites " +websiteCounter + " found Links which are not visted " + todoListForCrawler.size());
 		
 		
 		
