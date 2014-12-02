@@ -64,7 +64,31 @@ public class SearchManager {
 	public void performVSRSearch(String query, ArrayList<Website> websites,
 			PrintWriter out, Document documentQuery) {
 	
-		out.write("<h1>TODO:VSR</h1>");
+		List<Website> results = new ArrayList<Website>();
+		
+		out.write("<h1>VSR</h1>");
+		
+		for (int i= 0; i<websites.size(); i++){
+			
+			websites.get(i).cosDisToQuery = websites.get(i).getDocument().computeCosDistance(documentQuery);
+			websites.get(i).setSortVSR(true);
+			results.add(websites.get(i));
+		}
+		
+System.out.println(results.toString());		
+		//sort according to VSR
+		 Collections.sort(results);
+		 
+		 this.printResultsVSR(results, out);
+				
+	}
+	
+	public void printResultsVSR(List<Website> results, PrintWriter out)
+	{
+		for(int i = 0;i<results.size();i++)
+		{
+			out.write("<h2>"+results.get(i).getUrl()+ " "+results.get(i).cosDisToQuery+"<h2>");
+		}
 	}
 
 	public void performVSRHTMLSearch(String query, ArrayList<Website> websites,

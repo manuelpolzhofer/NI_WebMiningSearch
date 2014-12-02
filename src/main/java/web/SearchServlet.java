@@ -148,7 +148,7 @@ public class SearchServlet extends HttpServlet {
     	}
      	if(searchType.equals("vsr"))
     	{
-    		// documentQuery = Preprocesser.processQuery(new Query(2,query), stopwords);
+    		//documentQuery = Preprocesser.processQuery(new Query(2,query), stopwords);
     		searchManager.performVSRSearch(query, websites, out,documentQuery);
     	}
      	if(searchType.equals("vsr_html"))

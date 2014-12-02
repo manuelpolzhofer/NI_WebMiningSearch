@@ -26,6 +26,7 @@ public class Website implements Serializable, Comparable<Website> {
     public double pageRankNew = 0;
     public double cosDisToQuery = 0;
     private boolean sortPageRank;
+    private boolean sortVSR;
  
     public void setSortPageRank(boolean value)
     {
@@ -33,11 +34,20 @@ public class Website implements Serializable, Comparable<Website> {
     }
     
     
+    public void setSortVSR(boolean value)
+    {
+    	this.sortVSR = value;
+    }
+    
     public int compareTo(Website website) {
     	
     	if(sortPageRank)
     	{
     		return (int) ((int) this.pageRankNew - website.pageRankNew);
+    	}
+    	
+    	if (sortVSR){
+    		return (int) ((int) this.cosDisToQuery - website.cosDisToQuery);
     	}
     	return (int) ((int) this.pageRankNew - website.pageRankNew);
     	
