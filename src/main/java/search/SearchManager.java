@@ -39,23 +39,38 @@ public class SearchManager {
 	}
 	public void printResults(List<Website> results, PrintWriter out)
 	{
+		out.write("<h2>Results</h2>");
+		out.write("<table>");
+		out.write("<tr><b><td>nr.</td><td>title</td><td>url</td><td style=\"white-space:nowrap;\">page rank</td><td  style=\"white-space:nowrap;\">cos simularity to query</td></b>");
 		for(int i = 0;i<results.size();i++)
 		{
-			out.write("<h2>"+results.get(i).getUrl()+ " "+results.get(i).pageRankNew+"<h2>");
+			Website w = results.get(i);
+			
+			out.write("<tr>");
+			out.write("<td>"+(i+1)+"</td>");
+		    out.write("<td style=\"white-space:nowrap;\">"+w.getTitle()+"</td>");
+			out.write("<td><a href=\""+w.getUrl()+"\">"+w.getUrl()+"</a></td>");
+			out.write("<td>"+w.pageRankNew+"</td>");
+			out.write("<td>"+w.cosDisToQuery+"</td>");
+			out.write("</tr>");
 		}
+		out.write("</table>");
 	}
 
 	public void performBooleanSearch(String query, ArrayList<Website> websites,
 			PrintWriter out, Document documentQuery) {
 
-		out.write("<h1>TODO:Boolean</h1>");
+		out.write("<h1>Boolean</h1>");
+    	List<Website> results = new ArrayList<Website>();
 		for(int i = 0;i<websites.size();i++)
 		{
 			if(websites.get(i).containsWordFromDocument(documentQuery))
 			{
-				out.write("<h2>"+websites.get(i).getUrl()+"</h2>");
+				results.add(websites.get(i));
 			}
 		}
+		
+		this.printResults(results, out);
 		
 		
 		

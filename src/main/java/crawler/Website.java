@@ -25,7 +25,7 @@ public class Website implements Serializable, Comparable<Website> {
     public double pageRankOld = 0;
     public double pageRankNew = 0;
     public double cosDisToQuery = 0;
-    private boolean sortPageRank;
+    private boolean sortPageRank = false;
  
     public void setSortPageRank(boolean value)
     {
