@@ -94,7 +94,7 @@ System.out.println(results.toString());
 		//sort according to VSR
 		 Collections.sort(results);
 		 
-		 this.printResultsVSR(results, out);
+		 this.printResults(results, out);
 				
 	}
 	
