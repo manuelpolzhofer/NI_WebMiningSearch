@@ -81,7 +81,7 @@ public class SearchManager {
 	
 		List<Website> results = new ArrayList<Website>();
 		
-		out.write("<h1>VSR</h1>");
+		out.write("<h1>jlljkljklj</h1>");
 		
 		for (int i= 0; i<websites.size(); i++){
 			
