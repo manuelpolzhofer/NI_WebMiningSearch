@@ -46,6 +46,7 @@ public class Preprocesser {
 		ArrayList<String> stemmedQuery;
 		
 		Map<String,Integer>queryWordVector = new TreeMap<String,Integer>();
+		Map<String,Double>queryDocumentVector = new TreeMap<String,Double>();
 		Document docQuery = new Document(null,null,null);
 				
 		String[] words = queryText.split(",|\\.|\\s+"); //store all the words in an array
@@ -109,9 +110,17 @@ public class Preprocesser {
 		docQuery.setWordsInDocument(queryWordVector);
 		
 		
+		Document auxDoc = new Document(null,null,null);
+		ArrayList<Document> auxList = new ArrayList<Document>();
+		
+		auxList.add(docQuery);
+		
+		auxDoc.setTFIDF(auxList); 
+		
 System.out.println(docQuery.getWordsInDocument());
 
-		return docQuery;
+	
+		return auxList.get(0);
 	}
 	
 	
