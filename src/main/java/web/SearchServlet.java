@@ -100,10 +100,10 @@ public class SearchServlet extends HttpServlet {
   
     	
     	
-		/*ArrayList<Document> docList;
+		ArrayList<Document> docList;
 		
 		
-		String stopwords = "../stopwords.txt";
+		String stopwords = request.getContextPath()+ "/stopwords.txt";
 		
 		
 		
@@ -129,8 +129,6 @@ public class SearchServlet extends HttpServlet {
 		Document d = new Document(null,null);		
 		docList = d.processAllDocuments(dir);
 		
-		
-	 */
 	 
 	 
 	 

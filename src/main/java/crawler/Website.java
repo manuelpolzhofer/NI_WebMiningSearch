@@ -3,6 +3,8 @@ package crawler;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import textminer.Document;
+
 public class Website implements Serializable {
 	
 	/**
@@ -13,9 +15,19 @@ public class Website implements Serializable {
 	ArrayList<String> links;
 	String text;
 	String title;
+	String fileName;
+	
+	
+	private Document document;
+	
 	
     public double pageRankOld = 0;
     public double pageRankNew = 0;
+    
+    public void setFileName(String fileName)
+    {
+    	this.fileName = fileName;
+    }
     
     public int numberOfOutgoingLinks() {
         return this.links.size();
@@ -83,6 +95,14 @@ public class Website implements Serializable {
 		return string;
 		
 		
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 
 }

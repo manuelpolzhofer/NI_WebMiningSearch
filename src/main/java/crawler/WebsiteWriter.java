@@ -48,6 +48,9 @@ public class WebsiteWriter {
 		url = url.replace(".", "_");
 		
 		String path = folderName + "/"+url+".txt";
+		
+		website.setFileName(url+".txt");
+		
 		 File file = new File (path);
 	        file.getParentFile().mkdirs();
 		
