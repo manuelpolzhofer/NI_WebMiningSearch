@@ -24,12 +24,14 @@ public class Document {
 	// Map of the words in the document and the tfidf measure
 	private Map<String,Double> documentVector;
 	
+	private String fileName;
 	
 	/* Methods */
 	
 	//Constructor
-	public Document(Map<String,Integer> wordList, Map<String,Double> documentVector){
+	public Document(String fileName, Map<String,Integer> wordList, Map<String,Double> documentVector){
 		
+		this.fileName = fileName;
 		this.wordsInDocument =  wordList;
 		this.documentVector = documentVector;
 	}
@@ -90,7 +92,7 @@ public class Document {
 				
 					}//while
 				
-					Document e = new Document(wordsInDocument, null);
+					Document e = new Document(textFile.getName(),wordsInDocument, null);
 					documentList.add(e);
 					
 					
@@ -311,6 +313,16 @@ public class Document {
 
 	public void setDocumentVector(Map<String, Double> docVector) {
 		this.documentVector = docVector;
+	}
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }
