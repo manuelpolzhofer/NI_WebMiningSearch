@@ -7,9 +7,12 @@ import java.util.List;
 
 import pagerank.PageRank;
 import textminer.Document;
+import web.SearchServlet;
 import crawler.Website;
 
 public class SearchManager {
+	
+	private static final String SEARCH_QUERY_KEY = "SEARCH_QUERY";
 	
 	
 	public void performPageRankSearch(String query,ArrayList<Website> websites, PrintWriter out, Document documentQuery)
@@ -77,6 +80,20 @@ public class SearchManager {
 		
 		
 	}
+	
+	
+	public Document getSearchQueryOutOfWebsites(ArrayList<Website> websites)
+	{
+		for (int i= 0; i<websites.size(); i++){
+			if(websites.get(i).getUrl().equals(SEARCH_QUERY_KEY))
+			{
+				return websites.get(i).getDocument();
+			}
+			 
+		}
+		return null;
+	}
+	
 
 	public void performVSRSearch(String query, ArrayList<Website> websites,
 			PrintWriter out, Document documentQuery) {
@@ -84,16 +101,6 @@ public class SearchManager {
 		List<Website> results = new ArrayList<Website>();
 		
 		out.write("<h1>Vector Space Retreival</h1>");
-		
-		
-				
-				for (int i= 0; i<websites.size(); i++){
-					if(websites.get(i).getUrl().equals("SEARCH_QUERY"))
-					{
-						documentQuery = websites.get(i).getDocument();
-					}
-					 
-				}
 		
 		for (int i= 0; i<websites.size(); i++){
 			

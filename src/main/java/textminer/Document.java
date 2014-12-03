@@ -29,6 +29,13 @@ public class Document {
 	/* Methods */
 	
 	//Constructor
+	
+	public Document()
+	{
+		
+	}
+	
+	
 	public Document(String fileName, Map<String,Integer> wordList, Map<String,Double> documentVector){
 		
 		this.fileName = fileName;

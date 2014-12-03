@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import search.Query;
 import stemmer.*;
 
 public class Preprocesser {
@@ -28,101 +27,6 @@ public class Preprocesser {
 	
 	public static final int BOOLEAN = 1;
 	public static final int VSR = 2;
-	
-	/**
-	 * Process query according to its type
-	 * @param q
-	 * @return
-	 * @throws Throwable 
-	 */
-	public static Document processQuery(Query q, String stopWordsFile) throws Throwable{
-		
-		
-		String queryText = q.getQueryText();
-		Map<String,Integer> wordsInDocument;
-		ArrayList<String> wordsInQuery = new ArrayList<String>();
-		ArrayList<String> validWordsInQuery = new ArrayList<String>();
-		ArrayList<String> stopWordsList = getStopWordsList(stopWordsFile);
-		ArrayList<String> stemmedQuery;
-		
-		Map<String,Integer>queryWordVector = new TreeMap<String,Integer>();
-		Map<String,Double>queryDocumentVector = new TreeMap<String,Double>();
-		Document docQuery = new Document(null,null,null);
-				
-		String[] words = queryText.split(",|\\.|\\s+"); //store all the words in an array
-		
-		//Store non empty words in the array list of the file
-		for (int j=0; j< words.length;j++){
-		
-			if (words[j].isEmpty()){
-				continue;
-			}
-				
-			//Delete numbers
-			try {
-				Integer aux = Integer.parseInt(words[j]);
-				
-			} catch (NumberFormatException e) {
-				
-				wordsInQuery.add(words[j].toLowerCase()); //Only add if its not a number
-			}
-											
-		}
-		
-		// If query is boolean, store AND, OR, NOT
-		if (q.getType() == BOOLEAN){
-			if (wordsInQuery.contains("and")){
-				validWordsInQuery.add("and");
-			}
-		
-			if (wordsInQuery.contains("or")){
-				validWordsInQuery.add("or");
-			}
-		
-			if (wordsInQuery.contains("not")){
-				validWordsInQuery.add("not");
-			}
-		}
-	
-		//Remove stopwords
-		for (String stopWord: stopWordsList){
-			
-			if (wordsInQuery.contains(stopWord)){
-				wordsInQuery.remove(stopWord);
-			}
-
-		}
-		
-		//Update valid words list
-		for (String w:wordsInQuery){
-			validWordsInQuery.add(w);			
-		}
-				
-		// Apply stemmer
-		stemmedQuery = stemQuery(validWordsInQuery);
-		
-		//Make document from stemmed query
-		for (String w : stemmedQuery){
-			
-			queryWordVector.put(w, 1);
-		}
-		
-		docQuery.setWordsInDocument(queryWordVector);
-		
-		
-		Document auxDoc = new Document(null,null,null);
-		ArrayList<Document> auxList = new ArrayList<Document>();
-		
-		auxList.add(docQuery);
-		
-		auxDoc.setTFIDF(auxList); 
-		
-System.out.println(docQuery.getWordsInDocument());
-
-	
-		return auxList.get(0);
-	}
-	
 	
 	
 	/**

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pagerank.PageRank;
-import search.Query;
 import search.SearchManager;
 import textminer.Document;
 import textminer.Preprocesser;
@@ -22,10 +21,20 @@ import crawler.Website;
 import crawler.WebsiteWriter;
 
 /**
- * Servlet implementation class Test2
+ * Servlet implementation class Servlet
  */
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String PAGE_RANK = "page_rank";
+	private static final String BOOLEAN = "boolean";
+	private static final String VSR = "vsr";
+	private static final String VSR_HTML= "vsr_html";
+	
+	private static final String KORPUS_FOLDER_NAME = "korpus";
+	private static final String SEARCH_QUERY_KEY = "SEARCH_QUERY";
+	
+	
+	
 
     /**
      * Default constructor. 
@@ -70,23 +79,20 @@ public class SearchServlet extends HttpServlet {
     	niCrawler.startCrawling(startUrl,maxNumberOfVisit,out);
     	
     	HashMap<String,Website> visitedWebsites = niCrawler.getVisitedWebsites();
-       	visitedWebsites.put("SEARCH_QUERY", new Website("SEARCH_QUERY",query,query,new ArrayList<String>()));
+       	
+    	//we create out of the search query a normal document
+    	visitedWebsites.put(SEARCH_QUERY_KEY, new Website(SEARCH_QUERY_KEY,query,query,new ArrayList<String>()));
     	
     	
     	
-    	WebsiteWriter websiteWriter = new WebsiteWriter("korpus");
+    	WebsiteWriter websiteWriter = new WebsiteWriter(KORPUS_FOLDER_NAME);
     	websiteWriter.writeWebsites(visitedWebsites);
     	
  
     	ArrayList<Website> websites =
     		    new ArrayList<Website>(visitedWebsites.values());
     	
-    //end crawling -----------------
-
-    	
-    	
-    	
-    	
+    //end crawling -----------------	
     		
 		ArrayList<Document> docList;
 		
@@ -96,7 +102,7 @@ public class SearchServlet extends HttpServlet {
 		String fullPath = context.getRealPath(stopwords);
 		stopwords = fullPath;
 		
-		File folderFile = new File("korpus");
+		File folderFile = new File(KORPUS_FOLDER_NAME);
 		File[] fileList = folderFile.listFiles();
 		
 		// Preprocessing
@@ -111,60 +117,45 @@ public class SearchServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-		//String query = new String("")
-		
+			
 		//Generate TF-IDF vector representation
-		Document d = new Document(null,null,null);		
+		Document d = new Document();		
 		docList = d.processAllDocuments(dir);
+		
+	
 		SearchManager searchManager = new SearchManager();	
 		searchManager.addDocumentsToWebsites(docList,websites);
 		
     	
 		out.write("<div id=\"search-for\"<br>Search for: <b>"+query+" </b>");
 		
-		//stemm query
-
-		Query searchQuery  = new Query(2,query);
-		Document documentQuery = null;
-		try {
-			documentQuery = Preprocesser.processQuery(searchQuery, stopwords);
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		Document documentQuery = searchManager.getSearchQueryOutOfWebsites(websites);
+	
     
-    	if(searchType.equals("page_rank"))
+    	if(searchType.equals(PAGE_RANK))
     	{
+    		System.out.println("Page Rank");
     		searchManager.performPageRankSearch(query, websites, out, documentQuery);
     	}
-      	if(searchType.equals("boolean"))
+      	if(searchType.equals(BOOLEAN))
     	{
-      		try {
-      			searchQuery.setType(1);
-    			documentQuery = Preprocesser.processQuery(searchQuery, stopwords);
-    		} catch (Throwable e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-    		// documentQuery = Preprocesser.processQuery(new Query(1,query), stopwords);
-    		searchManager.performBooleanSearch(query, websites, out, documentQuery);
+ 
+    searchManager.performBooleanSearch(query, websites, out, documentQuery);
     	}
-     	if(searchType.equals("vsr"))
+     	if(searchType.equals(VSR))
     	{
-    		//documentQuery = Preprocesser.processQuery(new Query(2,query), stopwords);
-    		searchManager.performVSRSearch(query, websites, out,documentQuery);
+    searchManager.performVSRSearch(query, websites, out,documentQuery);
     	}
-     	if(searchType.equals("vsr_html"))
+     	if(searchType.equals(VSR_HTML))
     	{
-    		// documentQuery = Preprocesser.processQuery(new Query(2,query), stopwords);
-    		searchManager.performVSRHTMLSearch(query, websites, out,documentQuery);
+    	searchManager.performVSRHTMLSearch(query, websites, out,documentQuery);
     	}
 		
 		
 		
 	 
-	 
+	
 	 
 	 
 	}
